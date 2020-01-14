@@ -1,7 +1,10 @@
 class Api::V1::FormationsController < ApplicationController
     def index
         formations = Formation.all
-        render json: formations
+        options = {
+            include: [:plays]
+        }
+        render json: FormationSerializer.new(formations, options)
     end
 
     def create
