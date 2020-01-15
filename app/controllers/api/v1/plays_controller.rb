@@ -5,12 +5,12 @@ class Api::V1::PlaysController < ApplicationController
     def index
       @plays = Play.all
   
-      render json: @plays
+      render json: PlaySerializer.new(@plays)
     end
   
     # GET /plays/1
     def show
-      render json: @play
+      render json: PlaySerializer.new(@play)
     end
   
     # POST /plays
@@ -18,7 +18,7 @@ class Api::V1::PlaysController < ApplicationController
       @play = Play.new(play_params)
   
       if @play.save
-        render json: @play, status: :created, location: @play
+        render json: PlaySerializer.new(@play), status: :created, location: @play
       else
         render json: @play.errors, status: :unprocessable_entity
       end
@@ -27,7 +27,7 @@ class Api::V1::PlaysController < ApplicationController
     # PATCH/PUT /plays/1
     def update
       if @play.update(play_params)
-        render json: @play
+        render json: PlaySerializer.new(@play)
       else
         render json: @play.errors, status: :unprocessable_entity
       end
